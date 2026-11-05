@@ -38,8 +38,11 @@ from api_v4 import router as v4_router  # noqa: E402
 
 app.include_router(v4_router)
 
-# Local development only; Vercel promotes public/ content to the CDN.
-app.mount('/static', StaticFiles(directory=PUBLIC / 'static'), name='static')
+# Local development only. On Vercel, public/ is served by the CDN and may not
+# exist inside the function bundle; mounting a missing directory would crash
+# the function at import time, so mount only when it is present.
+if (PUBLIC / 'static').is_dir():
+    app.mount('/static', StaticFiles(directory=PUBLIC / 'static'), name='static')
 
 class Query(BaseModel):
     action: Literal['overview','teams','backtest','forecast','odds_backtest','export_predictions']
@@ -154,7 +157,10 @@ def execute(req: Query):
 
 @app.get('/')
 def index():
-    return FileResponse(PUBLIC / 'index.html')
+    page = PUBLIC / 'index.html'
+    if not page.is_file():   # on Vercel the CDN answers "/" before the function
+        raise HTTPException(404, 'Interface servida pela CDN.')
+    return FileResponse(page)
 
 
 @app.get('/api/health')

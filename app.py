@@ -1,7 +1,8 @@
-"""Stateless Corners Quant Edge FastAPI deployment on Vercel Python.
+"""Corners Quant Edge — FastAPI entrypoint for Vercel Python.
 
-Shared files are read-only; user CSV data is sent with each request and retained
-only in the user's browser. No shared write endpoints or user accounts.
+v4 endpoints live in api_v4.py (/api/v4/*). The v3 endpoints below are kept for
+compatibility. Shared files are read-only; user CSV data is sent with each
+request and retained only in the user's browser unless DATABASE_URL is set.
 """
 from __future__ import annotations
 
@@ -30,8 +31,12 @@ ROOT = Path(__file__).resolve().parent
 SAMPLE = ROOT / 'data' / 'historico_452_jogos.csv'
 PUBLIC = ROOT / 'public'
 MAX_MATCHES = 1_000_000
-MAX_ODDS = 300_000
-app = FastAPI(title='CORNERS QUANT EDGE / Vercel', version='3.1.0')
+MAX_ODDS = 2_000_000
+app = FastAPI(title='CORNERS QUANT EDGE / Vercel', version='4.0.0')
+
+from api_v4 import router as v4_router  # noqa: E402
+
+app.include_router(v4_router)
 
 # Local development only; Vercel promotes public/ content to the CDN.
 app.mount('/static', StaticFiles(directory=PUBLIC / 'static'), name='static')
@@ -86,7 +91,7 @@ def odds(csv_data: str | None):
     if not csv_data:
         return None
     if len(csv_data.encode('utf-8')) > MAX_ODDS:
-        raise DataError('Odds superiores ao limite de 300 KB.')
+        raise DataError('Odds superiores ao limite de 2 MB.')
     return parse_odds(csv_data.encode('utf-8'))
 
 
@@ -154,7 +159,7 @@ def index():
 
 @app.get('/api/health')
 def health():
-    return {'ok':True,'version':'3.1.0','sample_available':SAMPLE.exists(),
+    return {'ok':True,'version':'4.0.0','sample_available':SAMPLE.exists(),
             'storage':'client-side; stateless API'}
 
 
@@ -182,7 +187,7 @@ def validate_matches(req: CsvPayload):
 def validate_odds(req: CsvPayload):
     try:
         if len(req.csv.encode('utf-8')) > MAX_ODDS:
-            raise DataError('Arquivo de odds superior a 300 KB.')
+            raise DataError('Arquivo de odds superior a 2 MB.')
         df=odds(req.csv)
         return {'ok':True,'count':len(df),'message':'Odds validadas e armazenadas somente no navegador.'}
     except DataError as exc:
@@ -194,7 +199,10 @@ def template(which: str):
     if which=='matches':
         text='date,league,home,away,home_corners,away_corners\n2026-10-10,Premier League,Equipe A,Equipe B,6,4\n'
     elif which=='odds':
-        text='date,league,home,away,line,over_odds,under_odds,observed_at,kickoff_at,bookmaker\n2026-10-10,Premier League,Equipe A,Equipe B,9.5,1.90,1.92,2026-10-10T15:00:00Z,2026-10-10T17:00:00Z,Exemplo (ODDS FICTÍCIAS)\n'
+        text=('date,league,home,away,line,over_odds,under_odds,observed_at,kickoff_at,bookmaker,closing_over_odds,closing_under_odds\n'
+              '2026-10-10,Premier League,Equipe A,Equipe B,9.5,1.90,1.92,2026-10-10T15:00:00Z,2026-10-10T17:00:00Z,Exemplo (ODDS FICTÍCIAS),1.85,1.97\n')
+    elif which=='fixtures':
+        text='date,league,home,away,kickoff_utc\n2026-11-08,Premier League,Equipe A,Equipe B,2026-11-08T15:00:00Z\n'
     else:
         raise HTTPException(404,'Modelo não encontrado.')
     return Response(content=text,media_type='text/csv; charset=utf-8',

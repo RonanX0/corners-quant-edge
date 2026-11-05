@@ -1,0 +1,453 @@
+date,league,home,away,home_corners,away_corners
+2026-08-15,La Liga,Deportivo Alavés,Getafe CF,5,3
+2026-08-15,La Liga,Sevilla FC,Rayo Vallecano,1,2
+2026-08-16,La Liga,R. Racing Club,Villarreal CF,6,10
+2026-08-16,La Liga,RCD Espanyol de Barcelona,Levante UD,0,1
+2026-08-17,La Liga,RC Deportivo,Elche CF,2,6
+2026-08-19,La Liga,Atlético de Madrid,Málaga CF,6,1
+2026-08-20,La Liga,Rayo Vallecano,Deportivo Alavés,9,7
+2026-08-21,Premier League,Arsenal,Coventry,8,2
+2026-08-21,La Liga,Real Betis,Real Sociedad,4,5
+2026-08-21,Ligue 1,Olympique de Marseille,RC Strasbourg Alsace,3,4
+2026-08-22,Premier League,Hull,Man Utd,1,6
+2026-08-22,Premier League,Everton,Crystal Palace,4,0
+2026-08-22,Premier League,Ipswich,Sunderland,3,5
+2026-08-22,Premier League,Nott'm Forest,Leeds,3,2
+2026-08-22,Premier League,Brentford,Spurs,7,3
+2026-08-22,La Liga,RCD Espanyol de Barcelona,Real Madrid,0,8
+2026-08-22,La Liga,Athletic Club,Sevilla FC,10,3
+2026-08-22,La Liga,Valencia CF,Celta,1,2
+2026-08-22,Ligue 1,RC Lens,AJ Auxerre,4,7
+2026-08-22,Ligue 1,Estac Troyes,Paris FC,6,2
+2026-08-22,Ligue 1,Le Mans FC,Stade Brestois 29,1,10
+2026-08-22,Ligue 1,OGC Nice,FC Lorient,9,3
+2026-08-22,Ligue 1,Toulouse FC,Olympique Lyonnais,6,5
+2026-08-22,Serie A,Internazionale,Monza,3,3
+2026-08-22,Serie A,Udinese,Como,1,10
+2026-08-22,Serie A,Genoa,Napoli,5,5
+2026-08-22,Serie A,Parma,Cagliari,3,2
+2026-08-23,Premier League,Brighton,Aston Villa,5,2
+2026-08-23,Premier League,Man City,Bournemouth,8,3
+2026-08-23,Premier League,Newcastle,Liverpool,2,6
+2026-08-23,La Liga,Getafe CF,R. Racing Club,8,6
+2026-08-23,La Liga,Elche CF,FC Barcelona,3,1
+2026-08-23,La Liga,Atlético de Madrid,Villarreal CF,5,3
+2026-08-23,Ligue 1,Angers SCO,LOSC Lille,8,3
+2026-08-23,Ligue 1,Havre Athletic Club,AS Monaco,7,4
+2026-08-23,Ligue 1,Stade Rennais FC,Paris Saint-Germain,0,10
+2026-08-23,Serie A,Frosinone,Juventus,3,12
+2026-08-23,Serie A,Venezia,Lecce,5,3
+2026-08-23,Serie A,Atalanta,Sassuolo,4,4
+2026-08-23,Serie A,Torino,Milan,2,4
+2026-08-24,Premier League,Fulham,Chelsea,6,4
+2026-08-24,La Liga,Málaga CF,RC Deportivo,7,4
+2026-08-24,La Liga,CA Osasuna,Levante UD,9,4
+2026-08-24,Serie A,Bologna,Lazio,8,6
+2026-08-24,Serie A,Roma,Fiorentina,2,3
+2026-08-25,La Liga,Valencia CF,Real Betis,8,2
+2026-08-26,La Liga,Real Madrid,Real Sociedad,4,7
+2026-08-27,La Liga,Celta,CA Osasuna,5,3
+2026-08-27,La Liga,FC Barcelona,Athletic Club,12,5
+2026-08-28,Premier League,Crystal Palace,Man City,2,6
+2026-08-28,La Liga,Deportivo Alavés,Villarreal CF,5,9
+2026-08-28,La Liga,R. Racing Club,Elche CF,5,10
+2026-08-28,Ligue 1,LOSC Lille,Paris Saint-Germain,0,5
+2026-08-28,Bundesliga,FC Bayern München,VfB Stuttgart,9,3
+2026-08-28,Serie A,Milan,Venezia,2,3
+2026-08-29,Premier League,Coventry,Hull,6,2
+2026-08-29,Premier League,Spurs,Newcastle,9,7
+2026-08-29,Premier League,Bournemouth,Everton,10,7
+2026-08-29,Premier League,Liverpool,Nott'm Forest,3,5
+2026-08-29,La Liga,Sevilla FC,Atlético de Madrid,4,2
+2026-08-29,La Liga,Levante UD,Real Betis,5,8
+2026-08-29,La Liga,Real Sociedad,RCD Espanyol de Barcelona,7,3
+2026-08-29,Ligue 1,RC Strasbourg Alsace,RC Lens,3,6
+2026-08-29,Ligue 1,AJ Auxerre,Angers SCO,7,10
+2026-08-29,Ligue 1,Stade Brestois 29,Toulouse FC,7,2
+2026-08-29,Ligue 1,FC Lorient,Estac Troyes,2,5
+2026-08-29,Ligue 1,Olympique Lyonnais,Havre Athletic Club,5,5
+2026-08-29,Bundesliga,1. FC Köln,TSG Hoffenheim,6,7
+2026-08-29,Bundesliga,1. FC Union Berlin,Eintracht Frankfurt,5,2
+2026-08-29,Bundesliga,1. FSV Mainz 05,SC Paderborn 07,11,2
+2026-08-29,Bundesliga,RB Leipzig,Borussia Mönchengladbach,7,6
+2026-08-29,Bundesliga,SV 07 Elversberg,Bayer 04 Leverkusen,4,3
+2026-08-29,Bundesliga,Borussia Dortmund,Hamburger SV,3,1
+2026-08-29,Serie A,Monza,Udinese,3,3
+2026-08-29,Serie A,Juventus,Parma,10,2
+2026-08-29,Serie A,Sassuolo,Torino,4,3
+2026-08-29,Serie A,Fiorentina,Frosinone,8,5
+2026-08-30,Premier League,Man Utd,Ipswich,8,4
+2026-08-30,Premier League,Sunderland,Fulham,3,4
+2026-08-30,Premier League,Leeds,Brentford,5,6
+2026-08-30,Premier League,Chelsea,Brighton,4,7
+2026-08-30,La Liga,RC Deportivo,Valencia CF,5,5
+2026-08-30,La Liga,Celta,Athletic Club,4,7
+2026-08-30,La Liga,Real Madrid,Málaga CF,9,6
+2026-08-30,Ligue 1,Paris FC,OGC Nice,2,4
+2026-08-30,Ligue 1,AS Monaco,Olympique de Marseille,5,7
+2026-08-30,Ligue 1,Stade Rennais FC,Le Mans FC,8,6
+2026-08-30,Bundesliga,SC Freiburg,SV Werder Bremen,6,5
+2026-08-30,Bundesliga,FC Augsburg,FC Schalke 04,11,3
+2026-08-30,Serie A,Napoli,Como,2,7
+2026-08-30,Serie A,Cagliari,Internazionale,8,6
+2026-08-30,Serie A,Lazio,Genoa,4,2
+2026-08-31,Premier League,Aston Villa,Arsenal,2,4
+2026-08-31,La Liga,FC Barcelona,Rayo Vallecano,9,5
+2026-08-31,La Liga,CA Osasuna,Getafe CF,1,3
+2026-08-31,Serie A,Lecce,Roma,2,1
+2026-08-31,Serie A,Atalanta,Bologna,1,2
+2026-09-03,La Liga,Real Sociedad,Celta,11,3
+2026-09-03,Ligue 1,Toulouse FC,LOSC Lille,6,2
+2026-09-04,Premier League,Ipswich,Liverpool,4,3
+2026-09-04,La Liga,Real Betis,Real Madrid,6,10
+2026-09-04,Ligue 1,Olympique Lyonnais,AJ Auxerre,9,5
+2026-09-04,Ligue 1,Paris Saint-Germain,AS Monaco,6,0
+2026-09-04,Bundesliga,VfB Stuttgart,1. FC Köln,10,8
+2026-09-04,Serie A,Genoa,Como,5,4
+2026-09-05,Premier League,Hull,Aston Villa,3,4
+2026-09-05,Premier League,Nott'm Forest,Spurs,2,10
+2026-09-05,Premier League,Brentford,Sunderland,4,3
+2026-09-05,Premier League,Brighton,Leeds,7,6
+2026-09-05,Premier League,Man City,Coventry,4,5
+2026-09-05,Premier League,Newcastle,Bournemouth,4,3
+2026-09-05,Premier League,Fulham,Crystal Palace,7,1
+2026-09-05,La Liga,Rayo Vallecano,R. Racing Club,9,6
+2026-09-05,La Liga,Villarreal CF,RC Deportivo,7,1
+2026-09-05,La Liga,Athletic Club,Atlético de Madrid,3,8
+2026-09-05,Ligue 1,RC Lens,FC Lorient,8,0
+2026-09-05,Ligue 1,OGC Nice,Le Mans FC,5,2
+2026-09-05,Ligue 1,Havre Athletic Club,Stade Brestois 29,5,5
+2026-09-05,Bundesliga,TSG Hoffenheim,Borussia Dortmund,10,3
+2026-09-05,Bundesliga,SC Paderborn 07,SC Freiburg,5,4
+2026-09-05,Bundesliga,Borussia Mönchengladbach,SV 07 Elversberg,13,4
+2026-09-05,Bundesliga,Bayer 04 Leverkusen,1. FC Union Berlin,11,1
+2026-09-05,Bundesliga,SV Werder Bremen,RB Leipzig,2,7
+2026-09-05,Bundesliga,FC Schalke 04,FC Bayern München,0,11
+2026-09-05,Serie A,Internazionale,Napoli,10,5
+2026-09-05,Serie A,Roma,Atalanta,14,1
+2026-09-05,Serie A,Fiorentina,Torino,3,5
+2026-09-06,Premier League,Arsenal,Chelsea,5,3
+2026-09-06,Premier League,Everton,Man Utd,4,3
+2026-09-06,La Liga,Deportivo Alavés,CA Osasuna,4,1
+2026-09-06,La Liga,RCD Espanyol de Barcelona,Sevilla FC,0,4
+2026-09-06,La Liga,Málaga CF,Levante UD,6,4
+2026-09-06,La Liga,Valencia CF,FC Barcelona,1,4
+2026-09-06,Ligue 1,Olympique de Marseille,Paris FC,5,4
+2026-09-06,Ligue 1,Estac Troyes,RC Strasbourg Alsace,11,0
+2026-09-06,Ligue 1,Angers SCO,Stade Rennais FC,12,6
+2026-09-06,Bundesliga,Eintracht Frankfurt,FC Augsburg,9,4
+2026-09-06,Bundesliga,Hamburger SV,1. FSV Mainz 05,4,5
+2026-09-06,Serie A,Parma,Monza,6,3
+2026-09-06,Serie A,Frosinone,Venezia,5,2
+2026-09-06,Serie A,Juventus,Milan,7,1
+2026-09-06,Serie A,Bologna,Sassuolo,10,7
+2026-09-07,La Liga,Getafe CF,Celta,3,5
+2026-09-07,La Liga,Elche CF,Real Sociedad,6,7
+2026-09-07,Serie A,Udinese,Lazio,2,8
+2026-09-07,Serie A,Cagliari,Lecce,7,5
+2026-09-11,La Liga,Sevilla FC,Valencia CF,6,4
+2026-09-11,Ligue 1,Stade Rennais FC,Olympique de Marseille,3,5
+2026-09-11,Bundesliga,1. FC Union Berlin,FC Schalke 04,4,5
+2026-09-11,Serie A,Venezia,Fiorentina,2,4
+2026-09-12,Premier League,Crystal Palace,Ipswich,6,3
+2026-09-12,Premier League,Sunderland,Arsenal,4,2
+2026-09-12,Premier League,Spurs,Everton,5,6
+2026-09-12,Premier League,Aston Villa,Nott'm Forest,6,1
+2026-09-12,Premier League,Bournemouth,Brentford,2,1
+2026-09-12,Premier League,Liverpool,Fulham,5,8
+2026-09-12,Premier League,Chelsea,Hull,10,4
+2026-09-12,La Liga,R. Racing Club,Deportivo Alavés,4,6
+2026-09-12,La Liga,Athletic Club,Elche CF,7,1
+2026-09-12,La Liga,Real Madrid,Rayo Vallecano,11,5
+2026-09-12,La Liga,CA Osasuna,RCD Espanyol de Barcelona,3,4
+2026-09-12,Ligue 1,RC Strasbourg Alsace,AS Monaco,2,7
+2026-09-12,Ligue 1,AJ Auxerre,OGC Nice,3,8
+2026-09-12,Ligue 1,Paris FC,Olympique Lyonnais,4,3
+2026-09-12,Ligue 1,FC Lorient,Toulouse FC,4,3
+2026-09-12,Ligue 1,Havre Athletic Club,Angers SCO,4,6
+2026-09-12,Bundesliga,1. FC Köln,SV Werder Bremen,8,5
+2026-09-12,Bundesliga,TSG Hoffenheim,VfB Stuttgart,5,7
+2026-09-12,Bundesliga,1. FSV Mainz 05,Eintracht Frankfurt,4,5
+2026-09-12,Bundesliga,Borussia Dortmund,SC Paderborn 07,7,3
+2026-09-12,Bundesliga,SC Freiburg,Borussia Mönchengladbach,6,2
+2026-09-12,Bundesliga,FC Augsburg,Bayer 04 Leverkusen,2,14
+2026-09-12,Serie A,Genoa,Frosinone,8,9
+2026-09-12,Serie A,Atalanta,Cagliari,3,2
+2026-09-12,Serie A,Lazio,Milan,2,5
+2026-09-13,Premier League,Coventry,Brighton,5,3
+2026-09-13,Premier League,Man Utd,Man City,6,7
+2026-09-13,La Liga,Getafe CF,RC Deportivo,3,7
+2026-09-13,La Liga,Levante UD,FC Barcelona,3,5
+2026-09-13,La Liga,Real Sociedad,Atlético de Madrid,9,3
+2026-09-13,La Liga,Celta,Málaga CF,1,5
+2026-09-13,Ligue 1,Le Mans FC,RC Lens,3,9
+2026-09-13,Ligue 1,Stade Brestois 29,Paris Saint-Germain,3,2
+2026-09-13,Ligue 1,LOSC Lille,Estac Troyes,2,5
+2026-09-13,Bundesliga,RB Leipzig,Hamburger SV,7,7
+2026-09-13,Bundesliga,SV 07 Elversberg,FC Bayern München,3,9
+2026-09-13,Serie A,Napoli,Bologna,10,0
+2026-09-13,Serie A,Lecce,Monza,4,6
+2026-09-13,Serie A,Sassuolo,Juventus,3,10
+2026-09-14,Premier League,Leeds,Newcastle,5,5
+2026-09-14,La Liga,Villarreal CF,Real Betis,7,4
+2026-09-14,Serie A,Internazionale,Udinese,10,1
+2026-09-14,Serie A,Como,Parma,11,4
+2026-09-14,Serie A,Torino,Roma,1,8
+2026-09-15,La Liga,Deportivo Alavés,Valencia CF,2,5
+2026-09-15,La Liga,Rayo Vallecano,RCD Espanyol de Barcelona,3,5
+2026-09-15,La Liga,Elche CF,Real Madrid,2,5
+2026-09-16,La Liga,RC Deportivo,Sevilla FC,4,4
+2026-09-16,La Liga,Atlético de Madrid,CA Osasuna,8,0
+2026-09-16,La Liga,FC Barcelona,R. Racing Club,18,0
+2026-09-17,La Liga,Málaga CF,Villarreal CF,4,8
+2026-09-17,La Liga,Real Betis,Getafe CF,4,3
+2026-09-18,Premier League,Brentford,Chelsea,4,12
+2026-09-18,La Liga,RCD Espanyol de Barcelona,Elche CF,3,3
+2026-09-18,Ligue 1,AS Monaco,RC Lens,2,8
+2026-09-18,Bundesliga,FC Bayern München,1. FC Union Berlin,9,2
+2026-09-18,Serie A,Monza,Sassuolo,7,5
+2026-09-19,Premier League,Everton,Ipswich,4,4
+2026-09-19,Premier League,Nott'm Forest,Coventry,6,2
+2026-09-19,Premier League,Spurs,Aston Villa,11,1
+2026-09-19,Premier League,Brighton,Arsenal,5,6
+2026-09-19,Premier League,Newcastle,Hull,4,7
+2026-09-19,La Liga,Sevilla FC,FC Barcelona,1,3
+2026-09-19,La Liga,Athletic Club,Deportivo Alavés,5,1
+2026-09-19,La Liga,Celta,R. Racing Club,3,3
+2026-09-19,La Liga,CA Osasuna,Rayo Vallecano,4,4
+2026-09-19,Ligue 1,Paris FC,RC Strasbourg Alsace,3,0
+2026-09-19,Ligue 1,Le Mans FC,FC Lorient,1,3
+2026-09-19,Ligue 1,Toulouse FC,Havre Athletic Club,6,7
+2026-09-19,Ligue 1,Olympique Lyonnais,Stade Rennais FC,3,8
+2026-09-19,Ligue 1,Angers SCO,Estac Troyes,2,11
+2026-09-19,Bundesliga,VfB Stuttgart,Borussia Dortmund,6,2
+2026-09-19,Bundesliga,Eintracht Frankfurt,SC Freiburg,3,5
+2026-09-19,Bundesliga,Borussia Mönchengladbach,1. FSV Mainz 05,6,4
+2026-09-19,Bundesliga,Hamburger SV,1. FC Köln,3,5
+2026-09-19,Bundesliga,SV Werder Bremen,FC Augsburg,2,2
+2026-09-19,Serie A,Udinese,Cagliari,16,1
+2026-09-19,Serie A,Venezia,Lazio,7,2
+2026-09-19,Serie A,Bologna,Torino,1,6
+2026-09-19,Serie A,Roma,Internazionale,4,2
+2026-09-20,Premier League,Leeds,Crystal Palace,4,3
+2026-09-20,Premier League,Man City,Sunderland,6,5
+2026-09-20,Premier League,Bournemouth,Liverpool,3,3
+2026-09-20,Premier League,Fulham,Man Utd,3,13
+2026-09-20,La Liga,Getafe CF,Málaga CF,5,9
+2026-09-20,La Liga,Villarreal CF,Levante UD,7,1
+2026-09-20,La Liga,RC Deportivo,Real Betis,11,5
+2026-09-20,La Liga,Atlético de Madrid,Real Madrid,3,1
+2026-09-20,La Liga,Valencia CF,Real Sociedad,7,5
+2026-09-20,Ligue 1,Olympique de Marseille,Paris Saint-Germain,3,7
+2026-09-20,Ligue 1,AJ Auxerre,Stade Brestois 29,8,3
+2026-09-20,Ligue 1,OGC Nice,LOSC Lille,3,7
+2026-09-20,Bundesliga,SC Paderborn 07,TSG Hoffenheim,6,5
+2026-09-20,Bundesliga,Bayer 04 Leverkusen,RB Leipzig,9,6
+2026-09-20,Bundesliga,FC Schalke 04,SV 07 Elversberg,4,4
+2026-09-20,Serie A,Parma,Genoa,2,5
+2026-09-20,Serie A,Frosinone,Como,7,8
+2026-09-20,Serie A,Juventus,Atalanta,4,5
+2026-09-20,Serie A,Milan,Lecce,2,3
+2026-09-20,Serie A,Fiorentina,Napoli,4,5
+2026-10-09,La Liga,Málaga CF,RCD Espanyol de Barcelona,8,2
+2026-10-09,Ligue 1,RC Lens,Olympique Lyonnais,7,4
+2026-10-09,Bundesliga,Borussia Dortmund,SV Werder Bremen,9,3
+2026-10-10,Premier League,Arsenal,Leeds,2,4
+2026-10-10,Premier League,Man Utd,Spurs,4,4
+2026-10-10,Premier League,Ipswich,Fulham,2,5
+2026-10-10,Premier League,Sunderland,Brighton,7,5
+2026-10-10,Premier League,Aston Villa,Brentford,2,2
+2026-10-10,Premier League,Chelsea,Bournemouth,1,7
+2026-10-10,La Liga,Deportivo Alavés,Atlético de Madrid,0,10
+2026-10-10,La Liga,Real Madrid,Villarreal CF,9,3
+2026-10-10,La Liga,FC Barcelona,Getafe CF,9,2
+2026-10-10,Ligue 1,Stade Brestois 29,Angers SCO,4,5
+2026-10-10,Ligue 1,FC Lorient,Paris FC,3,9
+2026-10-10,Ligue 1,LOSC Lille,Havre Athletic Club,4,5
+2026-10-10,Ligue 1,AS Monaco,Toulouse FC,4,4
+2026-10-10,Ligue 1,Paris Saint-Germain,Le Mans FC,4,4
+2026-10-10,Bundesliga,TSG Hoffenheim,Hamburger SV,7,3
+2026-10-10,Bundesliga,1. FC Union Berlin,SV 07 Elversberg,7,3
+2026-10-10,Bundesliga,1. FSV Mainz 05,Bayer 04 Leverkusen,4,3
+2026-10-10,Bundesliga,SC Paderborn 07,VfB Stuttgart,7,5
+2026-10-10,Bundesliga,RB Leipzig,Eintracht Frankfurt,3,6
+2026-10-10,Bundesliga,FC Augsburg,FC Bayern München,5,9
+2026-10-10,Serie A,Internazionale,Parma,3,1
+2026-10-10,Serie A,Genoa,Fiorentina,3,4
+2026-10-10,Serie A,Napoli,Frosinone,6,4
+2026-10-11,Premier League,Hull,Everton,7,6
+2026-10-11,Premier League,Crystal Palace,Nott'm Forest,5,8
+2026-10-11,Premier League,Liverpool,Man City,5,6
+2026-10-11,La Liga,R. Racing Club,Valencia CF,8,3
+2026-10-11,La Liga,Elche CF,Celta,5,2
+2026-10-11,La Liga,Real Betis,CA Osasuna,8,4
+2026-10-11,La Liga,Real Sociedad,RC Deportivo,7,10
+2026-10-11,Ligue 1,Estac Troyes,Olympique de Marseille,6,3
+2026-10-11,Ligue 1,OGC Nice,RC Strasbourg Alsace,2,3
+2026-10-11,Ligue 1,Stade Rennais FC,AJ Auxerre,12,5
+2026-10-11,Bundesliga,1. FC Köln,Borussia Mönchengladbach,6,6
+2026-10-11,Bundesliga,SC Freiburg,FC Schalke 04,7,2
+2026-10-11,Serie A,Como,Roma,6,2
+2026-10-11,Serie A,Cagliari,Juventus,1,9
+2026-10-11,Serie A,Lecce,Bologna,10,3
+2026-10-11,Serie A,Sassuolo,Milan,3,5
+2026-10-11,Serie A,Lazio,Monza,7,6
+2026-10-12,Premier League,Coventry,Newcastle,2,6
+2026-10-12,La Liga,Levante UD,Sevilla FC,5,2
+2026-10-12,Serie A,Atalanta,Venezia,8,7
+2026-10-12,Serie A,Torino,Udinese,4,3
+2026-10-16,La Liga,RC Deportivo,Levante UD,3,5
+2026-10-16,Ligue 1,Le Mans FC,Toulouse FC,2,2
+2026-10-16,Bundesliga,Eintracht Frankfurt,1. FC Köln,7,3
+2026-10-16,Serie A,Frosinone,Sassuolo,5,4
+2026-10-17,Premier League,Everton,Chelsea,5,7
+2026-10-17,Premier League,Brentford,Liverpool,3,9
+2026-10-17,Premier League,Man City,Ipswich,2,3
+2026-10-17,Premier League,Newcastle,Aston Villa,4,5
+2026-10-17,Premier League,Fulham,Hull,10,2
+2026-10-17,La Liga,Villarreal CF,Elche CF,10,5
+2026-10-17,La Liga,RCD Espanyol de Barcelona,Atlético de Madrid,4,12
+2026-10-17,La Liga,Real Betis,FC Barcelona,2,5
+2026-10-17,La Liga,Valencia CF,Athletic Club,2,6
+2026-10-17,Ligue 1,RC Strasbourg Alsace,Paris Saint-Germain,3,6
+2026-10-17,Ligue 1,Estac Troyes,RC Lens,6,4
+2026-10-17,Ligue 1,LOSC Lille,Stade Brestois 29,5,2
+2026-10-17,Bundesliga,FC Bayern München,RB Leipzig,11,3
+2026-10-17,Bundesliga,1. FC Union Berlin,Borussia Dortmund,5,5
+2026-10-17,Bundesliga,SV 07 Elversberg,FC Augsburg,4,12
+2026-10-17,Bundesliga,Hamburger SV,VfB Stuttgart,5,9
+2026-10-17,Bundesliga,SV Werder Bremen,SC Paderborn 07,5,3
+2026-10-17,Bundesliga,FC Schalke 04,1. FSV Mainz 05,4,1
+2026-10-17,Serie A,Venezia,Napoli,0,12
+2026-10-17,Serie A,Bologna,Internazionale,2,6
+2026-10-17,Serie A,Roma,Genoa,5,3
+2026-10-18,Premier League,Nott'm Forest,Arsenal,8,6
+2026-10-18,Premier League,Leeds,Man Utd,2,3
+2026-10-18,Premier League,Brighton,Crystal Palace,8,5
+2026-10-18,Premier League,Bournemouth,Sunderland,5,3
+2026-10-18,La Liga,Málaga CF,Real Sociedad,4,5
+2026-10-18,La Liga,Celta,Deportivo Alavés,0,4
+2026-10-18,La Liga,Real Madrid,Sevilla FC,1,2
+2026-10-18,La Liga,CA Osasuna,R. Racing Club,7,4
+2026-10-18,Ligue 1,Paris FC,Stade Rennais FC,3,4
+2026-10-18,Ligue 1,FC Lorient,AS Monaco,3,4
+2026-10-18,Ligue 1,Olympique Lyonnais,OGC Nice,1,9
+2026-10-18,Ligue 1,Angers SCO,Olympique de Marseille,2,5
+2026-10-18,Ligue 1,Havre Athletic Club,AJ Auxerre,7,4
+2026-10-18,Bundesliga,Borussia Mönchengladbach,TSG Hoffenheim,3,6
+2026-10-18,Bundesliga,Bayer 04 Leverkusen,SC Freiburg,4,3
+2026-10-18,Serie A,Udinese,Lecce,1,4
+2026-10-18,Serie A,Juventus,Lazio,5,7
+2026-10-18,Serie A,Milan,Atalanta,2,2
+2026-10-18,Serie A,Fiorentina,Como,11,5
+2026-10-19,Premier League,Spurs,Coventry,4,4
+2026-10-19,La Liga,Getafe CF,Rayo Vallecano,8,8
+2026-10-19,Serie A,Monza,Cagliari,2,7
+2026-10-19,Serie A,Parma,Torino,6,2
+2026-10-21,La Liga,Levante UD,Athletic Club,3,9
+2026-10-23,Premier League,Ipswich,Nott'm Forest,0,5
+2026-10-23,La Liga,Deportivo Alavés,Málaga CF,7,2
+2026-10-23,Ligue 1,Stade Brestois 29,OGC Nice,3,7
+2026-10-23,Bundesliga,VfB Stuttgart,Borussia Mönchengladbach,6,5
+2026-10-23,Serie A,Torino,Monza,3,4
+2026-10-24,Premier League,Arsenal,Everton,12,3
+2026-10-24,Premier League,Coventry,Fulham,4,6
+2026-10-24,Premier League,Aston Villa,Man City,4,7
+2026-10-24,Premier League,Chelsea,Spurs,4,6
+2026-10-24,La Liga,Rayo Vallecano,Elche CF,3,3
+2026-10-24,La Liga,R. Racing Club,RCD Espanyol de Barcelona,9,4
+2026-10-24,La Liga,Atlético de Madrid,RC Deportivo,3,4
+2026-10-24,La Liga,Valencia CF,Villarreal CF,6,9
+2026-10-24,Ligue 1,RC Lens,Paris FC,6,1
+2026-10-24,Bundesliga,1. FC Köln,FC Schalke 04,6,5
+2026-10-24,Bundesliga,1. FSV Mainz 05,SV Werder Bremen,6,6
+2026-10-24,Bundesliga,SC Paderborn 07,Hamburger SV,6,3
+2026-10-24,Bundesliga,RB Leipzig,SV 07 Elversberg,4,6
+2026-10-24,Bundesliga,Borussia Dortmund,Eintracht Frankfurt,13,1
+2026-10-24,Bundesliga,FC Augsburg,1. FC Union Berlin,5,1
+2026-10-24,Serie A,Como,Sassuolo,6,4
+2026-10-24,Serie A,Napoli,Roma,2,11
+2026-10-24,Serie A,Cagliari,Bologna,1,6
+2026-10-24,Serie A,Lazio,Parma,8,3
+2026-10-25,Premier League,Hull,Brentford,5,6
+2026-10-25,Premier League,Man Utd,Bournemouth,5,4
+2026-10-25,Premier League,Crystal Palace,Newcastle,7,4
+2026-10-25,Premier League,Sunderland,Leeds,4,5
+2026-10-25,Premier League,Liverpool,Brighton,4,2
+2026-10-25,La Liga,Real Sociedad,Levante UD,2,3
+2026-10-25,La Liga,Athletic Club,Getafe CF,2,4
+2026-10-25,La Liga,Celta,Real Betis,3,4
+2026-10-25,La Liga,FC Barcelona,Real Madrid,6,6
+2026-10-25,Ligue 1,Olympique de Marseille,Havre Athletic Club,4,3
+2026-10-25,Ligue 1,AJ Auxerre,Le Mans FC,7,1
+2026-10-25,Ligue 1,Toulouse FC,Estac Troyes,4,2
+2026-10-25,Ligue 1,Angers SCO,FC Lorient,6,7
+2026-10-25,Ligue 1,AS Monaco,LOSC Lille,6,1
+2026-10-25,Ligue 1,Stade Rennais FC,RC Strasbourg Alsace,2,4
+2026-10-25,Bundesliga,TSG Hoffenheim,Bayer 04 Leverkusen,5,3
+2026-10-25,Bundesliga,SC Freiburg,FC Bayern München,5,6
+2026-10-25,Serie A,Internazionale,Fiorentina,6,1
+2026-10-25,Serie A,Udinese,Milan,5,4
+2026-10-25,Serie A,Genoa,Venezia,2,10
+2026-10-25,Serie A,Lecce,Juventus,5,3
+2026-10-25,Serie A,Atalanta,Frosinone,8,9
+2026-10-26,La Liga,Sevilla FC,CA Osasuna,7,4
+2026-10-26,Ligue 1,Paris Saint-Germain,Olympique Lyonnais,7,4
+2026-10-27,Serie A,Sassuolo,Lazio,2,1
+2026-10-27,Serie A,Torino,Como,5,6
+2026-10-27,Serie A,Roma,Cagliari,7,8
+2026-10-28,Serie A,Monza,Napoli,2,2
+2026-10-28,Serie A,Genoa,Juventus,6,9
+2026-10-28,Serie A,Parma,Udinese,3,6
+2026-10-28,Serie A,Venezia,Internazionale,3,6
+2026-10-28,Serie A,Milan,Bologna,2,3
+2026-10-29,Serie A,Frosinone,Lecce,10,3
+2026-10-29,Serie A,Fiorentina,Atalanta,8,2
+2026-10-30,La Liga,Villarreal CF,RCD Espanyol de Barcelona,7,3
+2026-10-30,Ligue 1,OGC Nice,Stade Rennais FC,4,7
+2026-10-30,Ligue 1,LOSC Lille,RC Lens,10,2
+2026-10-30,Ligue 1,Havre Athletic Club,Paris Saint-Germain,5,3
+2026-10-30,Bundesliga,SV 07 Elversberg,1. FSV Mainz 05,5,11
+2026-10-31,Premier League,Coventry,Sunderland,4,4
+2026-10-31,Premier League,Hull,Ipswich,6,3
+2026-10-31,Premier League,Brentford,Nott'm Forest,3,4
+2026-10-31,Premier League,Spurs,Crystal Palace,19,0
+2026-10-31,Premier League,Aston Villa,Fulham,7,7
+2026-10-31,Premier League,Man City,Brighton,8,2
+2026-10-31,Premier League,Bournemouth,Leeds,4,4
+2026-10-31,Premier League,Chelsea,Man Utd,8,7
+2026-10-31,La Liga,Rayo Vallecano,Celta,4,3
+2026-10-31,La Liga,Levante UD,Atlético de Madrid,5,3
+2026-10-31,La Liga,Real Betis,Málaga CF,10,3
+2026-10-31,La Liga,FC Barcelona,Deportivo Alavés,3,3
+2026-10-31,Ligue 1,Estac Troyes,Le Mans FC,4,2
+2026-10-31,Bundesliga,FC Bayern München,Borussia Dortmund,5,2
+2026-10-31,Bundesliga,Borussia Mönchengladbach,SC Paderborn 07,4,7
+2026-10-31,Bundesliga,Bayer 04 Leverkusen,VfB Stuttgart,12,3
+2026-10-31,Bundesliga,SV Werder Bremen,TSG Hoffenheim,8,4
+2026-10-31,Bundesliga,FC Augsburg,SC Freiburg,1,2
+2026-10-31,Bundesliga,FC Schalke 04,RB Leipzig,3,7
+2026-10-31,Serie A,Udinese,Roma,7,4
+2026-10-31,Serie A,Milan,Internazionale,3,11
+2026-10-31,Serie A,Bologna,Monza,5,2
+2026-11-01,Premier League,Liverpool,Arsenal,7,4
+2026-11-01,La Liga,Getafe CF,Sevilla FC,2,2
+2026-11-01,La Liga,R. Racing Club,Real Madrid,4,6
+2026-11-01,La Liga,Elche CF,Valencia CF,6,2
+2026-11-01,La Liga,Athletic Club,Real Sociedad,5,8
+2026-11-01,Ligue 1,Olympique de Marseille,Toulouse FC,4,3
+2026-11-01,Ligue 1,RC Strasbourg Alsace,AJ Auxerre,5,0
+2026-11-01,Ligue 1,Paris FC,AS Monaco,3,2
+2026-11-01,Ligue 1,Olympique Lyonnais,Angers SCO,4,3
+2026-11-01,Bundesliga,1. FC Union Berlin,1. FC Köln,2,6
+2026-11-01,Bundesliga,Eintracht Frankfurt,Hamburger SV,6,6
+2026-11-01,Serie A,Como,Venezia,8,1
+2026-11-01,Serie A,Frosinone,Torino,7,7
+2026-11-01,Serie A,Juventus,Napoli,13,4
+2026-11-01,Serie A,Lecce,Genoa,6,3
+2026-11-01,Serie A,Lazio,Cagliari,2,2
+2026-11-02,Premier League,Newcastle,Everton,4,5
+2026-11-02,La Liga,RC Deportivo,CA Osasuna,8,2
+2026-11-02,Ligue 1,FC Lorient,Stade Brestois 29,8,2
+2026-11-02,Serie A,Atalanta,Parma,8,4
+2026-11-02,Serie A,Sassuolo,Fiorentina,5,3

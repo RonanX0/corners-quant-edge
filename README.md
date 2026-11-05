@@ -1,106 +1,94 @@
-# CORNERS QUANT EDGE — Vercel Edition 3.1
+# CORNERS QUANT EDGE v4
 
-Aplicação FastAPI + interface HTML/CSS/JavaScript para analisar probabilidades de escanteios Over/Under, validar modelos cronologicamente e explorar odds de valor esperado.
+Plataforma de análise quantitativa de mercados **Over/Under de escanteios pré-jogo**: encontra jogos, estima a distribuição de escanteios, compara com odds reais identificadas por fonte e horário, classifica mercados com base em evidência e incerteza, valida modelos em walk-forward e mantém um registro de apostas.
 
-## Pronto para Vercel
+> Ferramenta de pesquisa. Probabilidades são estimativas de modelo; não há promessa de lucro ou precisão. O sistema não executa apostas.
 
-O projeto foi adaptado para as **Vercel Python Functions**. O `app.py` na raiz é um entrypoint detectado automaticamente. Os arquivos de interface estão em `public/`, que é distribuído pela CDN da Vercel.
+## O que funciona hoje
 
-**IMPORTANTE:** A implantação na conta Vercel ainda precisa ser realizada por você (login e autorização). Este pacote é para publicação; o link `.vercel.app` só existirá depois do deploy.
+| Área | Situação | Observação |
+|---|---|---|
+| Painel | ✅ | Só mostra números calculados a partir de dados reais; avisa quando faltam dados. |
+| Histórico real | ✅ sem chave | football-data.co.uk: escanteios, finalizações, no alvo, xG (temporadas recentes), árbitro. |
+| Calendário real | ✅ sem chave | `fixtures.csv` semanal do football-data.co.uk (publicado às sextas e terças) + CSV próprio. |
+| Odds de escanteios ao vivo | ⚠️ precisa de chave | The Odds API, mercado `alternate_totals_corners`. Sem `THE_ODDS_API_KEY` a fonte aparece como **desconectada** e nada é simulado. |
+| Odds por CSV | ✅ | Com `observed_at`, `kickoff_at` e, para CLV, odds de fechamento. |
+| Radar de Oportunidades | ✅ | Filtros por data, campeonato, mercado, linha, odd mín./máx., modelo, EV, classe; ordenação; análise; acompanhar; registrar aposta. |
+| Análise de confronto | ✅ | Distribuição 0–20+, intervalos preditivos, linhas 7,5–12,5, odds justas, fatores do modelo, perfis das equipes, H2H, riscos. |
+| Backtest científico | ✅ | Walk-forward com re-treino por bloco, validação × teste, Brier, log loss, NLL, MAE, acerto, IC por bootstrap de datas, por liga/temporada/linha, calibração. ROI/drawdown/CLV só com odds importadas. |
+| Gestão de apostas | ✅ | Registro manual, banca, ROI, drawdown, gráficos, CSV. No navegador ou no PostgreSQL. |
+| Banco de dados | ⚠️ precisa de configuração | PostgreSQL via `DATABASE_URL`; sem ela, tudo privado fica no navegador. |
 
-### Método A — Windows, sem GitHub
+## Modelos
 
-1. Instale o [Node.js LTS](https://nodejs.org/) se ainda não tiver. Feche e reabra o terminal para reconhecer o `npx`.
-2. Extraia este ZIP e abra a pasta extraída **CORNERS_QUANT_EDGE_VERCEL**.
-3. Clique duas vezes em `PUBLICAR_VERCEL_WINDOWS.bat`.
-4. Faça login no Vercel quando solicitado e confirme as perguntas de configuração do projeto. Se necessário, escolha criar um novo projeto, pasta raiz atual (`.`) e deixe comandos de build em branco.
-5. A Vercel mostrará a URL HTTPS ao terminar (p. ex. `https://nome-do-projeto.vercel.app`).
+Todos estimam a **distribuição completa** de escanteios (0 a 40), não só a média:
 
-### Método B — GitHub + deploy automático
+- `liga_nb` — média da liga, binomial negativa (**modelo-base** de comparação).
+- `form5_pois`, `form10_nb`, `venue10_nb` — médias móveis regularizadas (forma recente e mando).
+- `nb_regression` — regressão binomial negativa sobre a forma.
+- `hier_pois`, `hier_nb`, `hier_nb_rapido` — **força de ataque/defesa por equipe**, mando e nível por campeonato, encolhimento hierárquico (ridge), **ponderação temporal** (meia-vida 240 ou 90 dias); totais como convolução de duas binomiais negativas; incerteza pela informação de Fisher penalizada.
 
-1. Crie um repositório GitHub (preferencialmente privado) com o conteúdo desta pasta na **raiz** do repositório.
-2. Em https://vercel.com/new, selecione **Import Git Repository** e conecte o repositório.
-3. Confirme a detecção do framework **FastAPI / Python**, diretório raiz `./`. Não configure `npm run build`, `dist`, ou Next.js.
-4. Clique em Deploy. Mudanças posteriores na branch configurada geram novos deploys.
+Probabilidades de Over/Under tratam linhas meias, inteiras (devolução) e asiáticas (,25/,75). O EV considera devoluções; a probabilidade implícita é comparada com a do mercado **sem margem**.
 
-### Método C — CLI em qualquer sistema
+### Classificação no radar
 
-```bash
-npx vercel@latest login
-npx vercel@latest --prod
-```
-
-Execute os comandos na pasta que contém `app.py`, `vercel.json`, `requirements.txt` e `public/`.
-
-## Rotas e arquivos
-
-| Arquivo / rota | Função |
+| Classe | Regra |
 |---|---|
-| `app.py` | FastAPI stateless e validação de CSVs |
-| `engine.py` | modelos estatísticos, previsões, backtest e avaliação de odds |
-| `public/index.html` | dashboard |
-| `public/static/app.js` | controle da interface, importação e exportação |
-| `public/static/style.css` | layout responsivo |
-| `data/historico_452_jogos.csv` | demonstração histórica, **sem odds** |
-| `GET /api/health` | diagnóstico do servidor |
-| `POST /api/query` | cálculo de visão geral, equipes, projeção, backtest e ROI |
-| `POST /api/validate/matches` | validação dos resultados importados |
-| `POST /api/validate/odds` | validação das odds históricas |
-| `POST /api/import/premier10` | opcional, busca dez temporadas de fonte pública a pedido do visitante |
+| VALOR POTENCIAL | EV central ≥ mínimo **e** EV conservador > 0 (probabilidade no extremo desfavorável da incerteza) **e** modelo superou o modelo-base no teste walk-forward (IC 95% abaixo de zero) **e** diferença para o mercado sem margem ≤ 12 p.p. |
+| AGUARDAR CONFIRMAÇÃO | EV positivo que falha alguma das condições acima. |
+| SEM VANTAGEM | EV central ≤ 0. |
+| DADOS INSUFICIENTES | Sem odd real, odd sem horário, desatualizada ou posterior ao início, ou histórico curto das equipes. |
 
-### Por que as importações foram alteradas?
+Com os dados atuais do football-data (5 ligas, 3 temporadas) nenhum modelo supera o modelo-base de forma conclusiva — por isso o radar não marca VALOR POTENCIAL nessas condições. Esse é o comportamento esperado de um sistema honesto.
 
-As Vercel Functions têm sistema de arquivos somente leitura, com `/tmp` temporário. No aplicativo local antigo, todos os usuários poderiam compartilhar arquivos `data/user_matches.csv` e `data/user_odds.csv`, o que não funciona de forma confiável na Vercel e criaria risco de dados cruzados. A versão 3.1 remove os endpoints de escrita compartilhada.
+## Configuração (Vercel → Settings → Environment Variables)
 
-O histórico e as odds enviados são validados e armazenados **no armazenamento local do navegador (localStorage)**. Quando necessário para cálculos, o navegador transmite os CSVs à API via HTTPS; a API processa em memória e não grava permanentemente. Isso significa:
-- os dados importados ficam disponíveis naquele navegador e origem enquanto não forem apagados, sujeitos às configurações do browser;
-- outros dispositivos/navegadores não compartilham esses arquivos;
-- limpar dados do site apaga os CSVs locais;
-- quem administrar uma instalação pública deve configurar proteção de acesso e limites de tráfego para custos e abuso.
+| Variável | Para quê |
+|---|---|
+| `THE_ODDS_API_KEY` | Odds pré-jogo de escanteios (The Odds API). Cada jogo consultado consome créditos. |
+| `ODDS_API_REGIONS` | Regiões das casas (padrão `eu,uk`). |
+| `ODDS_API_MAX_EVENTS` | Máximo de jogos consultados por atualização (padrão 12). |
+| `DATABASE_URL` | PostgreSQL (Neon pelo Vercel Marketplace). Ativa registro no servidor e histórico de odds. |
+| `APP_ACCESS_TOKEN` | Token do proprietário (≥ 16 caracteres). Necessário para ler/gravar dados privados no banco. |
+| `CRON_SECRET` | Protege `/api/v4/cron/snapshot-odds` (Vercel Cron diário grava odds no banco para CLV). |
 
-Para persistência entre dispositivos e contas, precisaremos integrar banco de dados e autenticação, como Vercel Postgres/Neon e um sistema de login. Não há contas nesta versão.
+Credenciais ficam só em variáveis de ambiente; nada é gravado no repositório.
 
-### Limites e metodologia
-
-- Importação: até 1 MB de resultados e 300 KB de odds; formato CSV UTF-8.
-- A base inicial contém resultados de 452 partidas em cinco ligas (2026/27), sem odds.
-- Os modelos suportados estão em `engine.py`: variantes de médias regularizadas, Poisson e regressão binomial negativa.
-- O histórico de treino e validação é separado cronologicamente para evitar utilizar resultados futuros.
-- O painel mostra estimativas e um cenário conservador **ilustrativo**, não odds garantidas.
-- Sem preços de escanteios registrados antes das partidas, **não existe ROI histórico validado**.
-- Os CSVs de odds enviados por usuários não são autenticados externamente.
-- `POST /api/import/premier10` exige internet e depende de disponibilidade e condições de uso da fonte externa. Há um limite de 3 importações por IP a cada 10 minutos, mas ele vale só por instância da função; numa instalação pública, crie também uma regra de rate limit no Vercel Firewall para essa rota.
-- Datas: `AAAA-MM-DD` é lido como ano-mês-dia; `DD/MM/AAAA` (padrão football-data) é lido com o dia primeiro. Arquivos que misturam os dois formatos são recusados.
-- ROI: quando um jogo tem várias cotações válidas, usa-se só a observação mais recente antes do início, escolhida antes de olhar o EV (evita escolher a melhor casa em retrospecto).
-- O sistema não realiza apostas nem oferece garantias de lucro.
-
-### Rodar e testar localmente
+## Rodar localmente
 
 ```bash
 python -m venv .venv
-# Windows: .venv\\Scripts\\activate
-# Linux/macOS: source .venv/bin/activate
+# Windows: .venv\Scripts\activate   |   Linux/macOS: source .venv/bin/activate
 pip install -r requirements.txt
 python -m uvicorn app:app --reload --port 8765
 ```
 
-Abra http://localhost:8765. Teste `GET /api/health` e `POST /api/query`.
-
-Para executar os testes automatizados:
+Testes:
 
 ```bash
+pip install httpx
 python -m unittest discover -s tests -v
 ```
 
-## Arquitetura
+Backtest longo fora do limite serverless (e registro da versão do modelo no banco):
 
-Frontend hospedado no CDN da Vercel → FastAPI (Vercel Function) → engine pandas/numpy/scipy, usando amostra somente leitura ou CSV carregado na requisição. Não há serviço em segundo plano, scraping ao vivo nem execução de apostas.
+```bash
+python scripts/backtest.py --leagues E0 SP1 D1 I1 F1 --seasons 6 --folds 16 --out relatorio.json
+```
 
-### Fontes
+## Estrutura
 
-- Vercel FastAPI: https://vercel.com/docs/frameworks/backend/fastapi
-- Vercel Functions filesystem: https://vercel.com/docs/functions/runtimes
-- Amostra de jogos: https://github.com/oladeeayo/open-matchday
-- Importação opcional de Premier League: https://github.com/datasets/football-datasets
+| Caminho | Função |
+|---|---|
+| `app.py` | Entrada FastAPI (Vercel). Mantém as rotas v3. |
+| `api_v4.py` | Rotas `/api/v4/*`: status, dataset, radar, confronto, backtest, apostas, cron. |
+| `cqe/providers.py` | football-data.co.uk, The Odds API, CSV; estado de cada fonte. |
+| `cqe/model.py` | Distribuições, EV, odds justas, modelo hierárquico de força. |
+| `cqe/backtest.py` | Walk-forward, métricas, bootstrap, ROI/drawdown/CLV. |
+| `cqe/analysis.py` | Projeções, perfis, radar e classificação. |
+| `cqe/db.py` | PostgreSQL/SQLite com isolamento por usuário. Esquema em `docs/schema.sql`. |
+| `engine.py` | Motor v3 (features de forma), reaproveitado. |
+| `public/` | Interface (HTML/CSS/JS sem bibliotecas externas). |
+| `docs/ARQUITETURA.md` | Arquitetura, pesquisa de provedores, limites e pendências. |
 
-Confirme os termos de licença e utilização antes de publicar dados de terceiros.
+Deploy: a Vercel publica a branch `main` conectada ao repositório. Para rodar os testes no GitHub Actions a cada push, copie `docs/github-actions-tests.yml` para `.github/workflows/tests.yml` (exige um token com permissão `workflow` ou o editor do GitHub).

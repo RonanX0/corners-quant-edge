@@ -3,7 +3,10 @@
   "functions": {
     "app.py": {
       "maxDuration": 60,
-      "excludeFiles": "{tests/**,**/__pycache__/**,*.zip}"
+      "excludeFiles": "{tests/**,scripts/**,docs/**,**/__pycache__/**,*.zip,.venv/**}"
     }
-  }
+  },
+  "crons": [
+    { "path": "/api/v4/cron/snapshot-odds", "schedule": "0 9 * * *" }
+  ]
 }

@@ -2,66 +2,195 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#091119" />
-  <meta name="description" content="CORNERS QUANT EDGE: sistema de modelagem estatística de escanteios, comparação Over/Under e backtesting." />
-  <title>CORNERS QUANT EDGE — Research Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Corners Quant Edge</title>
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="brand"><div class="brand-mark"><span>⌁</span></div><div><strong>CORNERS<span class="brand-green">.</span></strong><small>QUANT EDGE <em>PRO</em></small></div></div>
-      <div class="nav-caption">WORKSPACE</div>
-      <nav class="nav">
-        <button class="nav-btn active" data-screen="overview"><span class="nav-icon">◫</span> Visão geral</button>
-        <button class="nav-btn" data-screen="forecast"><span class="nav-icon">◉</span> Analisar jogo</button>
-        <button class="nav-btn" data-screen="backtest"><span class="nav-icon">▥</span> Backtesting</button>
-        <button class="nav-btn" data-screen="odds"><span class="nav-icon">⌁</span> Odds & EV <span class="nav-sub">BETA</span></button>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-mark">CQE</span><div><strong>Corners Quant Edge</strong><small>v4 · escanteios pré-jogo</small></div></div>
+      <nav class="nav" id="nav">
+        <button data-view="painel" class="active"><span>▦</span>Painel</button>
+        <button data-view="radar"><span>◎</span>Radar de Oportunidades</button>
+        <button data-view="confronto"><span>⇄</span>Análise de confronto</button>
+        <button data-view="backtest"><span>↻</span>Backtest científico</button>
+        <button data-view="apostas"><span>▤</span>Gestão de apostas</button>
+        <button data-view="dados"><span>⛁</span>Dados e fontes</button>
       </nav>
-      <div class="nav-caption nav-caption-lower">GERENCIAR</div>
-      <nav class="nav"><button class="nav-btn" data-screen="data"><span class="nav-icon">▤</span> Bases de dados</button></nav>
-      <div class="side-spacer"></div>
-      <div class="model-status"><span class="pulse"></span><div><strong>Motor estatístico ativo</strong><small>Análise na Vercel • Sem API paga</small></div></div>
-      <div class="side-bottom"><span>RESEARCH TERMINAL</span><strong>v3.0</strong></div>
-    </aside>
-    <div class="main-zone">
-      <header class="topbar"><div class="top-left"><span class="breadcrumb">CORNERS QUANT EDGE</span><span class="slash">/</span><span id="currentSection">Visão geral</span></div><div class="top-right"><span class="top-calendar" id="todayLabel">BASE HISTÓRICA</span><span class="avatar">CQ</span></div></header>
-      <div class="content">
-        <div id="message" class="toast" aria-live="polite"></div>
-        <section class="screen active" id="screen-overview">
-          <div class="intro"><div><div class="eyebrow"><span class="eyebrow-dot"></span> LABORATÓRIO QUANTITATIVO / FUTEBOL</div><h1>Previsão não é <span class="gradient-text">palpite.</span></h1><p>Transforme histórico de escanteios em probabilidades, valide modelos fora da amostra e investigue preços de mercado com transparência.</p><div class="hero-actions"><button class="button primary" data-goto="forecast">Analisar confronto <span>→</span></button><button class="button ghost" data-goto="backtest">Ver backtest ↗</button></div></div><div class="hero-art"><div class="art-aura"></div><div class="field"><div class="field-center"></div><div class="field-box box-left"></div><div class="field-box box-right"></div><div class="field-line line-v"></div><div class="corner-a"></div><div class="corner-b"></div></div><div class="art-metric"><span>λ <strong id="artLambda">10.2</strong></span><small>cantos esperados</small></div></div></div>
-          <div class="section-row"><div><h2>Panorama dos dados</h2><p>Histórico carregado no motor de análise</p></div><div class="source-pill"><span class="small-dot"></span><span id="sourceText">Carregando base...</span></div></div>
-          <div class="stats-grid">
-            <div class="stat-card"><div class="stat-cap">PARTIDAS HISTÓRICAS <span>01</span></div><div class="stat-value" id="sMatches">—</div><div class="stat-desc">Jogos completos registrados</div><div class="stat-line positive"></div></div>
-            <div class="stat-card"><div class="stat-cap">LIGAS ANALISADAS <span>02</span></div><div class="stat-value" id="sLeagues">—</div><div class="stat-desc">Campeonatos na base ativa</div><div class="stat-line blue"></div></div>
-            <div class="stat-card"><div class="stat-cap">MÉDIA DE ESCANTEIOS <span>03</span></div><div class="stat-value" id="sAverage">—</div><div class="stat-desc">Por jogo no histórico</div><div class="stat-line purple"></div></div>
-            <div class="stat-card"><div class="stat-cap">ODDS HISTÓRICAS <span>04</span></div><div class="stat-value" id="sOdds">—</div><div class="stat-desc" id="sOddsCaption">Não informadas</div><div class="stat-line amber"></div></div>
-          </div>
-          <div class="two-up"><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">DISTRIBUIÇÃO DE MERCADO</div><h3>Over 9,5 por campeonato</h3></div><span class="mini-tag">DADOS REAIS</span></div><div id="leagueChart" class="horizontal-chart"></div><div class="chart-foot">Frequência histórica — não representa odds nem previsão futura</div></div><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">STATUS DO MODELO</div><h3>Último teste cronológico</h3></div><span class="mini-tag">HOLDOUT</span></div><div class="health-score"><div class="ring" id="ring"><div><strong id="ringValue">—</strong><small>acertos</small></div></div><div class="health-lines"><div><span>Modelo selecionado</span><strong id="healthModel">—</strong></div><div><span>Brier Score</span><strong id="healthBrier">—</strong></div><div><span>Partidas de teste</span><strong id="healthN">—</strong></div></div></div><div class="notice muted"><span>ⓘ</span> Acertividade isolada não comprova lucro.</div></div></div>
-          <div class="footnote"><span class="warn-icon">!</span><span><b>Status científico:</b> modelo exploratório. A amostra de teste já foi examinada em estudos anteriores; não comprova lucro.</span></div>
-        </section>
-        <section class="screen" id="screen-forecast">
-          <div class="page-title"><div class="eyebrow">MODELAGEM / PRÉ-JOGO</div><h1>Analisar <span class="gradient-text">confronto.</span></h1><p>Escolha duas equipes do histórico e insira odds decimais para inspecionar probabilidades e valor esperado estimado.</p></div>
-          <div class="two-up unequal"><div class="panel form-panel"><div class="panel-head"><div><div class="tiny-subtitle">01 / CONFIGURAÇÃO</div><h3>Parâmetros da partida</h3></div><span class="mini-tag">PRÉ-JOGO</span></div><form id="forecastForm">
-            <label class="form-label" for="leagueSelect">Campeonato</label><select id="leagueSelect" required></select>
-            <div class="form-dual"><div><label class="form-label" for="homeSelect">Mandante</label><select id="homeSelect" required></select></div><div><label class="form-label" for="awaySelect">Visitante</label><select id="awaySelect" required></select></div></div>
-            <div class="form-dual"><div><label class="form-label" for="forecastDate">Data de referência</label><input id="forecastDate" type="date" required /></div><div><label class="form-label" for="lineSelect">Linha de escanteios</label><select id="lineSelect"><option>7.5</option><option>8.5</option><option selected>9.5</option><option>10.5</option><option>11.5</option><option>12.5</option><option>13.5</option></select></div></div>
-            <label class="form-label" for="modelSelect">Modelo estatístico</label><select id="modelSelect"><option value="">Automático (validado no histórico)</option></select>
-            <div class="form-divider"><span>ODDS DECIMAIS (OPCIONAIS, INSERIDAS POR VOCÊ)</span></div><div class="form-dual"><div><label class="form-label" for="overOdds">Odd Over</label><input id="overOdds" type="number" placeholder="1.90" step="0.01" min="1.01" max="100" /></div><div><label class="form-label" for="underOdds">Odd Under</label><input id="underOdds" type="number" placeholder="1.90" step="0.01" min="1.01" max="100" /></div></div>
-            <button type="submit" id="forecastButton" class="button primary full">Calcular probabilidades <span>→</span></button>
-          </form></div><div class="panel result-panel"><div class="panel-head"><div><div class="tiny-subtitle">02 / SAÍDA DO MODELO</div><h3>Projeção probabilística</h3></div><span class="mini-tag">SEM ODDS AO VIVO</span></div>
-          <div id="forecastEmpty" class="empty"><div class="empty-icon">◉</div><h3>Seu próximo confronto começa aqui</h3><p>Configure uma partida à esquerda e execute o modelo para visualizar as distribuições Over/Under.</p></div>
-          <div id="forecastResult" class="hidden"><div class="match-label" id="matchLabel"></div><div class="projection-value"><span>ESCANTEIOS ESPERADOS</span><strong id="projectedCorners">—</strong></div><div class="prob-stack"><div class="prob-text"><span>OVER</span><strong id="pOver">—</strong></div><div class="probbar"><div id="pOverBar"></div></div><div class="prob-text"><span>UNDER</span><strong id="pUnder">—</strong></div></div><div class="projection-details"><div><small>Modelo</small><strong id="selectedForecastModel">—</strong></div><div><small>Dispersão α</small><strong id="forecastAlpha">—</strong></div><div><small>Base até</small><strong id="forecastAsOf">—</strong></div></div><div id="marketResult" class="market-results"></div><div class="notice muted mt"><span>ⓘ</span> Incerteza ilustrativa: média de escanteios ±10%; não é intervalo calibrado.</div></div>
-          </div></div>
-        </section>
-        <section class="screen" id="screen-backtest"><div class="page-title"><div class="eyebrow">VALIDAÇÃO / FORA DA AMOSTRA</div><h1>Deixe os dados <span class="gradient-text">julgarem.</span></h1><p>Treino, validação e teste são separados cronologicamente. A escolha usa somente a validação nesta execução; a amostra inicial de 55 jogos já foi analisada em versões anteriores.</p></div><div class="inline-toolbar"><div><label class="form-label">Mercado analisado</label><select id="backtestLine"><option>7.5</option><option>8.5</option><option selected>9.5</option><option>10.5</option><option>11.5</option><option>12.5</option></select></div><button class="button primary" id="runBacktest">Executar backtest <span>→</span></button><a class="button ghost" id="exportBacktest" href="/api/download/predictions?line=9.5" download>Exportar CSV ↓</a></div><div id="backtestLoading" class="loading-hint">Preparado para executar.</div><div id="backtestResults" class="hidden"><div class="stats-grid three"><div class="stat-card"><div class="stat-cap">MODELO SELECIONADO</div><div class="stat-text" id="btModel">—</div><div class="stat-desc">Escolhido somente na validação</div></div><div class="stat-card"><div class="stat-cap">ACERTIVIDADE NO TESTE</div><div class="stat-value" id="btAccuracy">—</div><div class="stat-desc" id="btHits">—</div></div><div class="stat-card"><div class="stat-cap">BRIER SCORE</div><div class="stat-value" id="btBrier">—</div><div class="stat-desc">Menor é melhor</div></div></div><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">SEPARAÇÃO TEMPORAL</div><h3>Três períodos, nenhuma mistura</h3></div><span id="btPeriod" class="mini-tag">—</span></div><div class="splitbar" id="splitBar"></div><div class="splitlegend" id="splitLegend"></div></div><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">BENCHMARKING</div><h3>Comparação completa dos modelos</h3></div><span class="mini-tag">MÉTRICAS DE TESTE</span></div><div class="table-scroll"><table id="modelTable"><thead><tr><th>Modelo</th><th>Acertos</th><th>Brier ↓</th><th>MAE ↓</th><th>NLL ↓</th><th>Status</th></tr></thead><tbody></tbody></table></div><div class="chart-foot">O campeão no teste não substitui o modelo selecionado na validação. O conjunto de teste da base inicial (55 jogos) já foi utilizado em experimentos anteriores e não constitui validação inédita.</div></div><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">INCERTEZA DE VALIDAÇÃO</div><h3>O resultado é estatisticamente consistente?</h3></div><span class="mini-tag">BOOTSTRAP POR DATA</span></div><div class="uncertainty-grid"><div><small>Diferença de Brier vs. média histórica</small><strong id="btDelta">—</strong></div><div><small>Intervalo de 95%</small><strong id="btCI">—</strong></div><div><small>Datas de teste</small><strong id="btDateBlocks">—</strong></div></div><div id="btInference" class="notice muted"></div><div class="chart-foot">Delta negativo favorece o modelo. O bootstrap reamostra datas, mas pode ser frágil com poucas datas distintas.</div></div><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">AUDITORIA DE PREVISÕES</div><h3>Últimas partidas do teste</h3></div><span class="mini-tag">PROBABILIDADES PRÉ-JOGO</span></div><div class="table-scroll"><table id="predictionTable"><thead><tr><th>Data</th><th>Jogo</th><th>Escanteios reais</th><th>Previstos</th><th>P(Over)</th><th>Palpite</th><th>Resultado</th></tr></thead><tbody></tbody></table></div></div></div></section>
-        <section class="screen" id="screen-odds"><div class="page-title"><div class="eyebrow">AUDITORIA FINANCEIRA / DADOS VERIFICÁVEIS</div><h1>Valor esperado <span class="gradient-text">não é lucro.</span></h1><p>Importe odds registradas antes das partidas. As odds são enviadas à API para cálculo, sem armazenamento permanente no servidor. O sistema cruza os preços com previsões cronológicas sem reajustar o modelo depois de observar resultados. Os timestamps declarados não são autenticados externamente.</p></div><div class="two-up unequal"><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">01 / IMPORTAÇÃO</div><h3>Histórico de odds</h3></div><span class="mini-tag">CSV</span></div><div class="upload-zone"><div class="upload-icon">▤</div><h3>Envie suas odds históricas</h3><p>Arquivo CSV com linhas, odds Over/Under e timestamps pré-jogo</p><input type="file" id="oddsFile" accept=".csv,text/csv" /><button class="button secondary" id="uploadOdds">Importar odds CSV ↑</button><a href="/api/download/template/odds" download class="text-link">Baixar modelo de arquivo ↓</a></div><div class="notice muted"><span>ⓘ</span> É obrigatório informar o horário de observação e o horário de início. O sistema valida a ordem temporal, mas não autentica a origem das odds.</div></div><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">02 / ROI RETROSPECTIVO</div><h3>Resultado financeiro auditável</h3></div><span class="mini-tag">HOLDOUT</span></div><div class="form-dual"><div><label class="form-label">Linha de escanteios</label><select id="oddsLine"><option>7.5</option><option>8.5</option><option selected>9.5</option><option>10.5</option><option>11.5</option><option>12.5</option></select></div><div><label class="form-label">EV mínimo (%)</label><input id="minEV" type="number" value="3" min="0" max="50" step="0.5" /></div></div><button id="runOddsBacktest" class="button primary full">Calcular ROI das odds importadas <span>→</span></button><div id="roiOutput" class="roi-empty"><span>—</span><h3>ROI ainda não disponível</h3><p>Não há evidências de retorno sem preços históricos pré-jogo.</p></div></div></div><div class="panel" id="roiTablePanel" style="display:none"><div class="panel-head"><h3>Operações retrospectivas simuladas</h3></div><div class="table-scroll"><table id="roiTable"><thead><tr><th>Data</th><th>Jogo</th><th>Mercado</th><th>Odd</th><th>EV estimado</th><th>Lucro (u)</th></tr></thead><tbody></tbody></table></div></div></section>
-        <section class="screen" id="screen-data"><div class="page-title"><div class="eyebrow">GESTÃO / DADOS</div><h1>O modelo é tão bom <span class="gradient-text">quanto a base.</span></h1><p>Importe partidas completas e reproduza os testes em seus próprios dados. Não existe importação de odds automática nesta versão.</p></div><div class="two-up"><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">BASE DE RESULTADOS</div><h3>Partidas e escanteios</h3></div><span class="mini-tag">CSV</span></div><div class="upload-zone"><div class="upload-icon">▤</div><h3>Importar histórico próprio</h3><p>Colunas obrigatórias: date, league, home, away, home_corners e away_corners.</p><input type="file" id="matchesFile" accept=".csv,text/csv" /><button class="button secondary" id="uploadMatches">Importar partidas ↑</button><a href="/api/download/template/matches" download class="text-link">Modelo CSV para partidas ↓</a></div></div><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">ACESSO A DADOS PÚBLICOS</div><h3>Premier League · 10 temporadas</h3></div><div class="data-feature"><div class="data-num">3.800<span> jogos esperados</span></div><p>Baixe diretamente do repositório público football-datasets as temporadas de 2016/17 a 2025/26. Requer internet; dados são salvos no seu navegador.</p><button id="loadPremier" class="button primary full">Importar 10 temporadas <span>↗</span></button></div><div class="chart-foot">Fonte: datasets/football-datasets (derivado de Football-Data). Confira a licença de cada fonte antes de redistribuir.</div></div></div><div class="panel"><div class="panel-head"><div><div class="tiny-subtitle">PROVENIÊNCIA E LIMITAÇÕES</div><h3>Informações da base atual</h3></div><div class="metadata"><div><small>Origem</small><strong id="metaSource">—</strong></div><div><small>Período</small><strong id="metaDates">—</strong></div><div><small>Jogos</small><strong id="metaMatches">—</strong></div><div><small>Odds</small><strong id="metaOdds">—</strong></div></div><button id="restoreSample" class="button danger-outline">Restaurar base inicial e apagar importações locais</button></div></section>
-        <footer class="footer"><span>© CORNERS QUANT EDGE — PESQUISA QUANTITATIVA</span><span>Probabilidades estimadas não garantem resultados · Versão 3.0.0</span></footer>
+      <div class="side-foot">
+        <div id="sourceBadge" class="source-badge">Carregando fonte…</div>
+        <p>Ferramenta de pesquisa. Probabilidades são estimativas; não há garantia de lucro. Aposte com responsabilidade.</p>
       </div>
-    </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
+        <h1 id="viewTitle">Painel</h1>
+        <div class="top-status" id="topStatus"></div>
+      </header>
+      <div id="alerts" class="alerts"></div>
+
+      <!-- PAINEL -->
+      <section class="view active" id="view-painel">
+        <div class="kpis" id="kpis"></div>
+        <div class="grid two">
+          <div class="panel"><div class="panel-h"><h2>Jogos disponíveis para análise</h2><span class="muted" id="fixturesMeta"></span></div><div class="tbl-wrap"><table class="tbl" id="dashFixtures"></table></div></div>
+          <div class="panel"><div class="panel-h"><h2>Oportunidades identificadas</h2><button class="link" data-goto="radar">Abrir radar →</button></div><div class="tbl-wrap"><table class="tbl" id="dashOpps"></table></div></div>
+        </div>
+        <div class="grid two">
+          <div class="panel"><div class="panel-h"><h2>Performance validada dos modelos</h2><span class="muted" id="perfMeta"></span></div><div class="tbl-wrap"><table class="tbl" id="dashPerf"></table></div></div>
+          <div class="panel"><div class="panel-h"><h2>Fontes e atualização</h2><button class="link" data-goto="dados">Configurar →</button></div><div id="dashSources"></div></div>
+        </div>
+        <div class="grid two">
+          <div class="panel"><div class="panel-h"><h2>Histórico de previsões (teste walk-forward)</h2><span class="muted" id="predMeta"></span></div><div class="tbl-wrap short"><table class="tbl" id="dashPreds"></table></div></div>
+          <div class="panel"><div class="panel-h"><h2>Oportunidades acompanhadas</h2><button class="link" data-goto="apostas">Ver registro →</button></div><div class="tbl-wrap short"><table class="tbl" id="dashTracked"></table></div></div>
+        </div>
+      </section>
+
+      <!-- RADAR -->
+      <section class="view" id="view-radar">
+        <div class="panel filters">
+          <label>De<input type="date" id="rFrom" /></label>
+          <label>Até<input type="date" id="rTo" /></label>
+          <label>Campeonato<select id="rLeague"><option value="">Todos</option></select></label>
+          <label>Mercado<select id="rMarket"><option>Total de escanteios</option></select></label>
+          <label>Linha<select id="rLine"><option value="">Todas oferecidas</option></select></label>
+          <label>Odd mín.<input type="number" id="rMinOdd" value="1.40" step="0.05" min="1.01" /></label>
+          <label>Odd máx.<input type="number" id="rMaxOdd" value="4.00" step="0.05" min="1.01" /></label>
+          <label>EV mín. (%)<input type="number" id="rMinEv" value="3" step="0.5" min="0" /></label>
+          <label>Modelo<select id="rModel"><option value="">Selecionado na validação</option></select></label>
+          <label>Classificação<select id="rClass"><option value="">Todas</option></select></label>
+          <label class="check"><input type="checkbox" id="rBest" checked />Melhor preço por seleção</label>
+          <button class="btn primary" id="rRun">Atualizar radar</button>
+        </div>
+        <div class="class-counts" id="rCounts"></div>
+        <div class="panel"><div class="panel-h"><h2>Mercados avaliados</h2><span class="muted" id="rMeta"></span></div>
+          <div class="tbl-wrap"><table class="tbl dense" id="rTable"></table></div>
+          <p class="foot">EV = probabilidade estimada × (odd − 1) − probabilidade de perda (devoluções consideradas). A classificação exige EV conservador positivo, modelo validado fora da amostra e coerência com o mercado sem margem — não apenas EV central positivo.</p>
+        </div>
+      </section>
+
+      <!-- CONFRONTO -->
+      <section class="view" id="view-confronto">
+        <div class="panel filters">
+          <label>Campeonato<select id="mLeague"></select></label>
+          <label>Mandante<select id="mHome"></select></label>
+          <label>Visitante<select id="mAway"></select></label>
+          <label>Data<input type="date" id="mDate" /></label>
+          <label>Modelo<select id="mModel"><option value="">Selecionado na validação</option></select></label>
+          <button class="btn primary" id="mRun">Analisar</button>
+        </div>
+        <div id="mOut"><div class="empty">Escolha um jogo aqui ou abra um a partir do radar.</div></div>
+      </section>
+
+      <!-- BACKTEST -->
+      <section class="view" id="view-backtest">
+        <div class="panel filters">
+          <label>Blocos walk-forward<input type="number" id="bFolds" value="10" min="4" max="24" /></label>
+          <label>Linha principal<select id="bLine"></select></label>
+          <button class="btn primary" id="bRun">Executar backtest</button>
+          <span class="muted" id="bMeta"></span>
+        </div>
+        <div id="bOut"><div class="empty">Execute o backtest para ver a validação cronológica.</div></div>
+        <div class="panel">
+          <div class="panel-h"><h2>ROI com odds históricas verificáveis</h2><span class="muted">Só é calculado com odds pré-jogo datadas importadas por você</span></div>
+          <div class="filters inline">
+            <label>EV mín. (%)<input type="number" id="bMinEv" value="3" step="0.5" min="0" /></label>
+            <label>Comissão (%)<input type="number" id="bComm" value="0" step="0.5" min="0" /></label>
+            <button class="btn" id="bRoi">Calcular ROI</button>
+            <span class="muted" id="bOddsInfo"></span>
+          </div>
+          <div id="bRoiOut"></div>
+        </div>
+      </section>
+
+      <!-- APOSTAS -->
+      <section class="view" id="view-apostas">
+        <div class="grid two wide-left">
+          <div class="panel">
+            <div class="panel-h"><h2>Registrar aposta</h2><span class="muted" id="betStore"></span></div>
+            <form id="betForm" class="form-grid">
+              <input type="hidden" id="betId" />
+              <label>Data<input type="date" id="betDate" required /></label>
+              <label class="span2">Jogo<input id="betMatch" placeholder="Mandante x Visitante" required maxlength="200" /></label>
+              <label>Mercado<input id="betMarket" value="Total de escanteios" maxlength="60" /></label>
+              <label>Linha<input type="number" id="betLine" step="0.25" /></label>
+              <label>Lado<select id="betSide"><option>Over</option><option>Under</option><option value="">Outro</option></select></label>
+              <label>Odd<input type="number" id="betOdd" step="0.01" min="1.01" required /></label>
+              <label>Casa<input id="betBook" maxlength="80" /></label>
+              <label>Valor apostado<input type="number" id="betStake" step="0.01" min="0.01" required /></label>
+              <label>Resultado<select id="betResult"><option value="pendente">Pendente</option><option value="ganha">Ganha</option><option value="perdida">Perdida</option><option value="devolvida">Devolvida</option><option value="meio_ganha">Meio ganha</option><option value="meio_perdida">Meio perdida</option></select></label>
+              <label class="span2">Modelo e versão<input id="betModel" maxlength="80" /></label>
+              <label class="span3">Justificativa da seleção<textarea id="betWhy" rows="2" maxlength="2000"></textarea></label>
+              <div class="span3 actions"><button class="btn primary" type="submit">Salvar aposta</button><button class="btn" type="button" id="betClear">Limpar</button></div>
+            </form>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><h2>Resumo da banca</h2><label class="inline-label">Banca inicial <input type="number" id="bankStart" value="1000" step="10" min="0" /></label></div>
+            <div class="kpis small" id="betKpis"></div>
+          </div>
+        </div>
+        <div class="grid two">
+          <div class="panel"><div class="panel-h"><h2>Evolução da banca</h2></div><div class="chart" id="bankChart"></div></div>
+          <div class="panel"><div class="panel-h"><h2>Drawdown</h2></div><div class="chart" id="ddChart"></div></div>
+        </div>
+        <div class="panel"><div class="panel-h"><h2>Registro</h2><div class="btn-row"><button class="btn" id="betExport">Exportar CSV ↓</button></div></div><div class="tbl-wrap"><table class="tbl dense" id="betTable"></table></div></div>
+        <div class="panel"><div class="panel-h"><h2>Oportunidades acompanhadas</h2><div class="btn-row"><button class="btn" id="trackExport">Exportar CSV ↓</button></div></div><div class="tbl-wrap"><table class="tbl dense" id="trackTable"></table></div></div>
+        <p class="foot">Registro manual. O sistema não executa apostas, não sugere valores para recuperar perdas e não usa progressões como martingale.</p>
+      </section>
+
+      <!-- DADOS -->
+      <section class="view" id="view-dados">
+        <div class="grid two">
+          <div class="panel">
+            <div class="panel-h"><h2>Fonte do histórico</h2></div>
+            <div class="source-choice">
+              <label class="radio"><input type="radio" name="src" value="football_data" />football-data.co.uk <small>resultados reais gratuitos, com escanteios, finalizações e xG</small></label>
+              <label class="radio"><input type="radio" name="src" value="csv" />CSV importado <small>seus resultados, guardados só neste navegador</small></label>
+              <label class="radio"><input type="radio" name="src" value="demo" />Modo demonstração <small>amostra fixa de 452 jogos, sem calendário e sem odds</small></label>
+            </div>
+            <div id="fdOptions">
+              <div class="muted">Campeonatos (até 8)</div>
+              <div class="league-grid" id="leagueBoxes"></div>
+              <label class="inline-label">Temporadas recentes <select id="seasons"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></label>
+            </div>
+            <div class="btn-row"><button class="btn primary" id="applySource">Aplicar fonte</button></div>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><h2>Importar CSV</h2></div>
+            <div class="upload"><div><strong>Resultados</strong><small id="csvMatchesInfo"></small></div><input type="file" id="fileMatches" accept=".csv,text/csv" /><a href="/api/download/template/matches" download>modelo ↓</a><button class="btn small" data-clear="matches">Apagar</button></div>
+            <div class="upload"><div><strong>Jogos futuros</strong><small id="csvFixturesInfo"></small></div><input type="file" id="fileFixtures" accept=".csv,text/csv" /><a href="/api/download/template/fixtures" download>modelo ↓</a><button class="btn small" data-clear="fixtures">Apagar</button></div>
+            <div class="upload"><div><strong>Odds de escanteios</strong><small id="csvOddsInfo"></small></div><input type="file" id="fileOdds" accept=".csv,text/csv" /><a href="/api/download/template/odds" download>modelo ↓</a><button class="btn small" data-clear="odds">Apagar</button></div>
+            <p class="foot">Odds importadas precisam de <code>observed_at</code> (horário da cotação) e <code>kickoff_at</code>. Para CLV, inclua <code>closing_over_odds</code> e <code>closing_under_odds</code>. Nada é autenticado externamente.</p>
+          </div>
+        </div>
+        <div class="panel"><div class="panel-h"><h2>Estado dos provedores</h2><button class="btn small" id="refreshStatus">Atualizar</button></div><div class="tbl-wrap"><table class="tbl" id="provTable"></table></div></div>
+        <div class="grid two">
+          <div class="panel">
+            <div class="panel-h"><h2>Acesso ao banco de dados</h2></div>
+            <p class="muted" id="dbInfo"></p>
+            <label class="inline-label">Token de acesso <input type="password" id="token" autocomplete="off" placeholder="APP_ACCESS_TOKEN" /></label>
+            <div class="btn-row"><button class="btn" id="saveToken">Salvar token neste navegador</button></div>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><h2>Variáveis de ambiente (Vercel)</h2></div>
+            <table class="tbl"><tbody>
+              <tr><td><code>THE_ODDS_API_KEY</code></td><td>Chave da The Odds API para odds pré-jogo de escanteios.</td></tr>
+              <tr><td><code>ODDS_API_REGIONS</code></td><td>Regiões de casas (padrão <code>eu,uk</code>).</td></tr>
+              <tr><td><code>ODDS_API_MAX_EVENTS</code></td><td>Jogos consultados por atualização (padrão 12; cada um consome créditos).</td></tr>
+              <tr><td><code>DATABASE_URL</code></td><td>PostgreSQL (Neon / Vercel Marketplace). Ativa o registro no servidor.</td></tr>
+              <tr><td><code>APP_ACCESS_TOKEN</code></td><td>Token do proprietário (mín. 16 caracteres) para ler/gravar dados privados.</td></tr>
+              <tr><td><code>CRON_SECRET</code></td><td>Protege a rota agendada que grava o histórico de odds.</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
-<script src="/static/app.js" defer></script>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/static/app.js"></script>
 </body>
 </html>

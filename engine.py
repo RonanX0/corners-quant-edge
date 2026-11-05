@@ -60,7 +60,18 @@ def parse_dates(values: pd.Series) -> pd.Series:
     return pd.to_datetime(s, errors="coerce", format="mixed").dt.normalize()
 
 
-def parse_matches(data: bytes | str | Path) -> pd.DataFrame:
+OPTIONAL_STATS = ("home_shots", "away_shots", "home_sot", "away_sot", "home_xg", "away_xg")
+OPTIONAL_TEXT = ("time", "referee", "season")
+
+
+def parse_matches(data: bytes | str | Path, drop_invalid: bool = False) -> pd.DataFrame:
+    """Parse a results CSV into the canonical match table.
+
+    Required: date, home, away, home_corners, away_corners (league optional).
+    Optional columns kept when present: shots, shots on target, xG, time,
+    referee, season. With ``drop_invalid`` (external feeds), rows without valid
+    corners are dropped instead of rejecting the whole file.
+    """
     try:
         if isinstance(data, bytes):
             df = pd.read_csv(io.BytesIO(data), encoding="utf-8-sig")
@@ -73,8 +84,12 @@ def parse_matches(data: bytes | str | Path) -> pd.DataFrame:
     except Exception as exc:
         raise DataError(f"CSV de partidas inválido: {exc}") from exc
     df.columns = [str(k).strip().lower() for k in df.columns]
-    aliases = {"hometeam": "home", "awayteam": "away", "hc": "home_corners", "ac": "away_corners", "league_name": "league", "competition": "league"}
-    df = df.rename(columns={k:v for k,v in aliases.items() if k in df.columns})
+    aliases = {"hometeam": "home", "awayteam": "away", "hc": "home_corners", "ac": "away_corners",
+               "league_name": "league", "competition": "league",
+               "hs": "home_shots", "as": "away_shots", "hst": "home_sot", "ast": "away_sot",
+               "hxg": "home_xg", "axg": "away_xg"}
+    df = df.rename(columns={k:v for k,v in aliases.items() if k in df.columns and v not in df.columns})
+    df = df.dropna(how="all")
     required = {"date", "home", "away", "home_corners", "away_corners"}
     if missing := required - set(df.columns):
         raise DataError("Colunas faltando: " + ", ".join(sorted(missing)))
@@ -92,11 +107,22 @@ def parse_matches(data: bytes | str | Path) -> pd.DataFrame:
                (df.home_corners != np.floor(df.home_corners.fillna(0))) |
                (df.away_corners != np.floor(df.away_corners.fillna(0))))
     if invalid.any():
-        raise DataError(f"{int(invalid.sum())} linha(s) inválida(s). Confira datas e escanteios inteiros não negativos.")
+        if not drop_invalid:
+            raise DataError(f"{int(invalid.sum())} linha(s) inválida(s). Confira datas e escanteios inteiros não negativos.")
+        df = df[~invalid]
     key = ["date", "league", "home", "away"]
     if df.duplicated(key).any():
-        raise DataError("Há partidas duplicadas com a mesma data, liga, mandante e visitante.")
-    df = df[["date", "league", "home", "away", "home_corners", "away_corners"]].copy()
+        if not drop_invalid:
+            raise DataError("Há partidas duplicadas com a mesma data, liga, mandante e visitante.")
+        df = df.drop_duplicates(key, keep="last")
+    extra = [c for c in OPTIONAL_STATS + OPTIONAL_TEXT if c in df.columns]
+    df = df[["date", "league", "home", "away", "home_corners", "away_corners", *extra]].copy()
+    for c in OPTIONAL_STATS:
+        if c in df.columns:
+            df[c] = pd.to_numeric(df[c], errors="coerce")
+    for c in OPTIONAL_TEXT:
+        if c in df.columns:
+            df[c] = df[c].fillna("").astype(str).str.strip()
     df[["home_corners", "away_corners"]] = df[["home_corners", "away_corners"]].astype(int)
     df["total"] = df.home_corners + df.away_corners
     df = df.sort_values(["date", "league", "home", "away"]).reset_index(drop=True)

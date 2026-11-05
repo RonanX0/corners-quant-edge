@@ -36,6 +36,30 @@ class DataError(ValueError):
     pass
 
 
+_ISO_DATE = re.compile(r"^\d{4}-\d{1,2}-\d{1,2}")
+_SLASH_DATE = re.compile(r"^\d{1,2}[/.-]\d{1,2}[/.-]\d{2,4}(\s|$)")
+
+
+def parse_dates(values: pd.Series) -> pd.Series:
+    """Parse match dates without silently swapping day and month.
+
+    ISO dates (2026-08-15) are parsed as year-month-day. Slash/dot dates such as
+    05/08/2016 (the football-data.co.uk convention) are parsed day-first. Mixing
+    the two styles in one file is rejected because the order would be ambiguous.
+    """
+    s = values.astype(str).str.strip()
+    filled = s[(s != "") & (s.str.lower() != "nan")]
+    iso = filled.str.match(_ISO_DATE)
+    slash = filled.str.match(_SLASH_DATE)
+    if iso.all():
+        return pd.to_datetime(s, errors="coerce", format="ISO8601").dt.normalize()
+    if slash.all():
+        return pd.to_datetime(s, errors="coerce", dayfirst=True, format="mixed").dt.normalize()
+    if (iso | slash).all():
+        raise DataError("Datas com formatos misturados (AAAA-MM-DD e DD/MM/AAAA). Use um único formato.")
+    return pd.to_datetime(s, errors="coerce", format="mixed").dt.normalize()
+
+
 def parse_matches(data: bytes | str | Path) -> pd.DataFrame:
     try:
         if isinstance(data, bytes):
@@ -56,7 +80,7 @@ def parse_matches(data: bytes | str | Path) -> pd.DataFrame:
         raise DataError("Colunas faltando: " + ", ".join(sorted(missing)))
     if "league" not in df.columns:
         df["league"] = "Liga não informada"
-    df["date"] = pd.to_datetime(df["date"], errors="coerce", format="mixed").dt.normalize()
+    df["date"] = parse_dates(df["date"])
     df["home"] = df["home"].astype(str).str.strip()
     df["away"] = df["away"].astype(str).str.strip()
     df["league"] = df["league"].astype(str).str.strip()
@@ -92,7 +116,7 @@ def parse_odds(data: bytes | str | Path) -> pd.DataFrame:
     expected = {"date", "league", "home", "away", "line", "over_odds", "under_odds", "observed_at", "kickoff_at"}
     if missing := expected - set(df):
         raise DataError("Colunas de odds faltando: " + ", ".join(sorted(missing)))
-    df["date"] = pd.to_datetime(df["date"], errors="coerce").dt.normalize()
+    df["date"] = parse_dates(df["date"])
     for col in ["league","home","away"]:
         df[col] = df[col].astype(str).str.strip()
     for col in ["line", "over_odds", "under_odds"]:
@@ -291,14 +315,18 @@ def uncertainty_by_date(test: pd.DataFrame, model:str, regression:dict, alpha:fl
     y=(test.total.to_numpy(float)>line).astype(float)
     delta=np.asarray((p-y)**2-(pb-y)**2)
     date_keys=test.date.dt.strftime("%Y-%m-%d").to_numpy()
-    groups=[delta[date_keys==key] for key in sorted(set(date_keys))]
+    # Per-date sums and counts: the mean of a resample of whole dates equals
+    # sum(chosen sums) / sum(chosen counts), so the loop can be vectorized.
+    _, group_idx = np.unique(date_keys, return_inverse=True)
+    n_groups = int(group_idx.max()) + 1 if len(group_idx) else 0
+    sums = np.bincount(group_idx, weights=delta, minlength=n_groups)
+    counts = np.bincount(group_idx, minlength=n_groups).astype(float)
     generator=np.random.default_rng(20261104)
-    boot=[]
-    if groups:
-        for _ in range(boots):
-            chosen=generator.integers(0,len(groups),size=len(groups))
-            sample=np.concatenate([groups[i] for i in chosen])
-            boot.append(float(sample.mean()))
+    lo=hi=None
+    if n_groups:
+        chosen=generator.integers(0,n_groups,size=(boots,n_groups))
+        boot=sums[chosen].sum(axis=1)/counts[chosen].sum(axis=1)
+        lo,hi=(float(x) for x in np.quantile(boot,[.025,.975]))
     edges=[0,.2,.4,.6,.8,1.0000001]
     calibration=[]
     for i in range(5):
@@ -307,16 +335,17 @@ def uncertainty_by_date(test: pd.DataFrame, model:str, regression:dict, alpha:fl
                             'n':int(mask.sum()),
                             'predicted':float(p[mask].mean()) if mask.any() else None,
                             'observed':float(y[mask].mean()) if mask.any() else None})
-    return {'date_blocks':len(groups),'delta_brier':float(delta.mean()),
-            'ci95':[float(x) for x in np.quantile(boot,[.025,.975])] if boot else [None,None],
-            'interpretation':'Melhor que média histórica em Brier' if boot and np.quantile(boot,.975)<0 else
-                             'Pior que média histórica em Brier' if boot and np.quantile(boot,.025)>0 else 'Inconclusivo',
+    return {'date_blocks':n_groups,'delta_brier':float(delta.mean()),
+            'ci95':[lo,hi],
+            'interpretation':'Melhor que média histórica em Brier' if hi is not None and hi<0 else
+                             'Pior que média histórica em Brier' if lo is not None and lo>0 else 'Inconclusivo',
             'calibration':calibration}
 
 
-def run_backtest(df:pd.DataFrame,line:float=9.5,min_history:int=4,include_rows:bool=True)->dict:
+def run_backtest(df:pd.DataFrame,line:float=9.5,min_history:int=4,include_rows:bool=True,
+                 features:pd.DataFrame|None=None)->dict:
     over_prob(10.,0.,line)
-    f=build_features(df,min_history=min_history)
+    f=build_features(df,min_history=min_history) if features is None else features
     train,val,test=split_dates(f)
     alpha=estimate_alpha(train)
     reg=fit_nb_regression(train)
@@ -344,7 +373,8 @@ def run_backtest(df:pd.DataFrame,line:float=9.5,min_history:int=4,include_rows:b
             "uncertainty":uncertainty_by_date(test,selected,reg,alpha,line),
             "notes":["Seleção baseada somente na validação; teste final separado por data.",
                      "Sem odds pré-jogo documentadas, ROI e lucratividade não podem ser calculados.",
-                     "Base padrão de 55 partidas já examinada em versões anteriores; não é um teste inédito.", "Probabilidades não foram validadas contra as casas de apostas."]}
+                     f"O conjunto de teste ({len(test)} partidas) da base de demonstração já foi examinado em versões anteriores; não é um teste inédito.",
+"Probabilidades não foram validadas contra as casas de apostas."]}
     result["_internal"]={"features":f,"train":train,"validation":val,"test":test,"alpha":alpha,"regression":reg}
     return result
 
@@ -360,7 +390,7 @@ def new_prediction(df:pd.DataFrame,date:str,league:str,home:str,away:str,line:fl
     # Fit coefficients with all past data, as is allowed for an actual future event.
     if method is None:
         try:
-            method=run_backtest(earlier,include_rows=False)["selected"]
+            method=run_backtest(earlier,include_rows=False,features=feat)["selected"]
         except DataError:
             method="form10_nb"
     if method not in METHODS:
@@ -397,7 +427,13 @@ def market_eval(pred:dict,over_odds:float,under_odds:float)->dict:
 
 
 def roi_backtest(result:dict,odds:pd.DataFrame,min_ev:float=.03)->dict:
-    """Only user-supplied timestamped odds on chronological test; 1u per fixture."""
+    """Only user-supplied timestamped odds on chronological test; 1u per fixture.
+
+    When a fixture has several valid pre-match quotes (several bookmakers, or
+    several snapshots), exactly one is used: the most recent observation before
+    kickoff, chosen BEFORE looking at EV. Picking whichever quote passes the EV
+    filter would be line shopping in hindsight and inflate the ROI.
+    """
     internal=result["_internal"]
     test=internal["test"]
     model=result["selected"]
@@ -405,28 +441,36 @@ def roi_backtest(result:dict,odds:pd.DataFrame,min_ev:float=.03)->dict:
     test2=test[["date","league","home","away","total"]].copy()
     test2["mu"]=mu
     test2["alpha"]=a
-    d=pd.merge(test2,odds,on=["date","league","home","away"],how="inner")
-    rejected={"odds_ausentes":len(test2)-len(set(zip(d.date,d.league,d.home,d.away))),
-              "timestamp_invalido":0,"sem_valor_robusto":0,"fora_do_pre_jogo":0}
-    accepted=[]; seen=set()
+    key=["date","league","home","away"]
+    d=pd.merge(test2,odds,on=key,how="inner")
+    rejected={"odds_ausentes":len(test2)-len(d.drop_duplicates(key)),
+              "timestamp_invalido":0,"fora_do_pre_jogo":0,"linha_inteira":0,
+              "cotacoes_duplicadas":0,"sem_valor_robusto":0}
+    bad_ts=d.observed_at.isna()|d.kickoff_at.isna()
+    rejected["timestamp_invalido"]=int(bad_ts.sum())
+    d=d[~bad_ts]
+    lead=(d.kickoff_at-d.observed_at).dt.total_seconds()
+    outside=(lead<=0)|(lead>7*86400)
+    rejected["fora_do_pre_jogo"]=int(outside.sum())
+    d=d[~outside]
+    # only half-lines; integer lines would need push handling
+    integer_line=(d.line%1)==0
+    rejected["linha_inteira"]=int(integer_line.sum())
+    d=d[~integer_line]
+    # stable sort keeps file order among equal timestamps; keep the latest quote
+    d=d.sort_values("observed_at",kind="stable")
+    latest=d.drop_duplicates(key,keep="last")
+    rejected["cotacoes_duplicadas"]=len(d)-len(latest)
+    d=latest.sort_values(key,kind="stable")
+    accepted=[]
     for row in d.itertuples(index=False):
-        pair=(str(row.date),row.league,row.home,row.away)
-        if pd.isna(row.observed_at) or pd.isna(row.kickoff_at):
-            rejected["timestamp_invalido"]+=1;continue
-        if row.observed_at>=row.kickoff_at or (row.kickoff_at-row.observed_at).total_seconds()>7*86400:
-            rejected["fora_do_pre_jogo"]+=1;continue
         m=float(row.mu); p=float(over_prob(m,row.alpha,row.line));lo=float(over_prob(m*.9,row.alpha,row.line));hi=float(over_prob(m*1.1,row.alpha,row.line))
         a={"side":"Over","ev":p*row.over_odds-1,"ev_worst":lo*row.over_odds-1,"odds":float(row.over_odds)}
         b={"side":"Under","ev":(1-p)*row.under_odds-1,"ev_worst":(1-hi)*row.under_odds-1,"odds":float(row.under_odds)}
         cand=max((a,b),key=lambda x:x["ev_worst"])
         if cand["ev"]<min_ev or cand["ev_worst"]<=0:
             rejected["sem_valor_robusto"]+=1;continue
-        if pair in seen:continue
-        seen.add(pair)
         win = row.total>row.line if cand["side"]=="Over" else row.total<row.line
-        # only half-lines; no push
-        if float(row.line).is_integer():
-            rejected["sem_valor_robusto"]+=1;seen.remove(pair);continue
         accepted.append({"date":str(row.date.date()),"league":row.league,"home":row.home,"away":row.away,
                          "line":float(row.line),"side":cand["side"],"odd":cand["odds"],
                          "ev":cand["ev"],"ev_conservative":cand["ev_worst"],

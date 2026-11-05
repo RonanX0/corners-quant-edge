@@ -69,7 +69,9 @@ Para persistência entre dispositivos e contas, precisaremos integrar banco de d
 - O painel mostra estimativas e um cenário conservador **ilustrativo**, não odds garantidas.
 - Sem preços de escanteios registrados antes das partidas, **não existe ROI histórico validado**.
 - Os CSVs de odds enviados por usuários não são autenticados externamente.
-- `POST /api/import/premier10` exige internet e depende de disponibilidade e condições de uso da fonte externa.
+- `POST /api/import/premier10` exige internet e depende de disponibilidade e condições de uso da fonte externa. Há um limite de 3 importações por IP a cada 10 minutos, mas ele vale só por instância da função; numa instalação pública, crie também uma regra de rate limit no Vercel Firewall para essa rota.
+- Datas: `AAAA-MM-DD` é lido como ano-mês-dia; `DD/MM/AAAA` (padrão football-data) é lido com o dia primeiro. Arquivos que misturam os dois formatos são recusados.
+- ROI: quando um jogo tem várias cotações válidas, usa-se só a observação mais recente antes do início, escolhida antes de olhar o EV (evita escolher a melhor casa em retrospecto).
 - O sistema não realiza apostas nem oferece garantias de lucro.
 
 ### Rodar e testar localmente
